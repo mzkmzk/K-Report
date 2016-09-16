@@ -1,0 +1,33 @@
+{
+  "name": "try_js_error",
+  "version": "0.0.1",
+  "description": "javascript_utils",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzkmzk/JavaScript_Utils.git"
+  },
+  "keywords": [
+    "Journey"
+  ],
+  "author": "K",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mzkmzk/JavaScript_Utils/issues"
+  },
+  "homepage": "https://github.com/mzkmzk/JavaScript_Utils#readme",
+  "dependencies": {
+    "javascript_utils": "^0.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "6.9.1",
+    "babel-loader": "6.2.4",
+    "babel-preset-es2015": "6.14.0",
+    "babel-preset-es2016": "6.11.3",
+    "babel-preset-es2017": "6.14.0",
+    "webpack": "1.13.1"
+  }
+}
