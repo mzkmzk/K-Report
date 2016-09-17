@@ -1,48 +1,10 @@
 <html>
 	<head></head>
 	<body>
+		<script src="../Public/Try_JS_Error.js"></script>
 		<script src="./Test1.js" ></script>
-
-		<script type="text/javascript">
-			var Ajax = {
-				useImg: function(url, data, callback) {
-					var img = new Image();
-					img.onload = img.onerror = function() {
-						callback && callback();
-					}
-					url += '?';
-					var params = Object.keys(data);
-					for (var i = params.length - 1; i >= 0; i--) {
-						url += params[i] + "=" + data[params[i]];
-					}
-					img.src = url;
-				}
-			}
-			window.onerror = function (msg, url, lineNo, columnNo, error) {
-			    var string = msg.toLowerCase();
-			    var substring = "script error";
-			    if (string.indexOf(substring) > -1){
-			        console.log('Script Error: See Browser Console for Detail');
-			    } else {
-			        var message = [
-			            'Message: ' + msg,
-			            'URL: ' + url,
-			            'Line: ' + lineNo,
-			            'Column: ' + columnNo,
-			            'Error object: ' + JSON.stringify(error)
-			        ].join(' - ');
 		
-			        console.log(message);
-			    }
-
-			    return false;
-			};
-			Ajax.useImg('http://my.apache.com/Inner_Try_JS/public/v1/PV_Controller/insert',{
-				'cookie': 123456
-			});
-			//var a = a + b + c + c.e.d;
-			//test();
-		</script>
+		
 
 	</body>
 </html>

@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/mzkmzk/JavaScript_Utils#readme",
   "dependencies": {
-    "javascript_utils": "^0.0.1"
+    "javascript_utils": "0.0.3"
   },
   "devDependencies": {
     "babel-core": "6.9.1",

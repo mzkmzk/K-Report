@@ -12,7 +12,7 @@ module.exports = {
       {
           test: /\.js$/,
           loader: 'babel',
-          exclude: __dirname + '/node_modules',
+          //exclude: __dirname + '/node_modules',
           //include: __dirname + '/Src',
       },
     ],
