@@ -40,7 +40,7 @@ Hope this is the best report you used library
 
 And it's just as easy with [npm](http://npmjs.com):
 
-```sh
+```
 npm i --save npm install K-Report 
 ```
 
