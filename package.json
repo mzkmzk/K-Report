@@ -1,14 +1,14 @@
 {
-  "name": "try_js_error",
+  "name": "K-Report",
   "version": "0.0.1",
-  "description": "javascript_utils",
-  "main": "index.js",
+  "description": "Hope this is the best report you used library ",
+  "main": "Public/index.bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mzkmzk/JavaScript_Utils.git"
+    "url": "git+https://github.com/mzkmzk/K-Report.git"
   },
   "keywords": [
     "Journey"
@@ -16,11 +16,10 @@
   "author": "K",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mzkmzk/JavaScript_Utils/issues"
+    "url": "https://github.com/mzkmzk/K-Report/issues"
   },
-  "homepage": "https://github.com/mzkmzk/JavaScript_Utils#readme",
+  "homepage": "https://github.com/mzkmzk/K-Report#readme",
   "dependencies": {
-    "javascript_utils": "0.0.3"
   },
   "devDependencies": {
     "babel-core": "6.9.1",
