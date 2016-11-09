@@ -1,19 +1,10 @@
-window.onerror = function (msg, url, lineNo, columnNo, error) {
-    var string = msg.toLowerCase();
-    var substring = "script error";
-    if (string.indexOf(substring) > -1){
-        console.log('Script Error: See Browser Console for Detail');
-    } else {
-        var message = [
-            'Message: ' + msg,
-            'URL: ' + url,
-            'Line: ' + lineNo,
-            'Column: ' + columnNo,
-            'Error object: ' + JSON.stringify(error)
-        ].join(' - ');
+import KReport from './KReport'
 
-        console.log(message);
-    }
-
-    return false;
-};
+if ( typeof module != 'undefined' && module.exports ) {
+    module.exports = KReport
+} else if ( typeof define == 'function' && define.amd ) {
+    define( function () { return KReport } )
+} else {
+    window.KReport = KReport
+}
+window.KReport = KReport

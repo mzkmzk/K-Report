@@ -1,13 +1,20 @@
 module.exports = {
   entry: {
-        index: './Src/Index/Index',
+        index: './Src/Index',
     },
-    devtool: "cheap-module-source-map",
+    //devtool: "cheap-module-source-map",
   output: {
     path: 'Public',
-    filename: 'Try_JS_Error.js'
+    filename: 'index.bundle.js'
   },
   module: {
+    preLoaders: [
+        {
+            test: /\.js$/,
+            loader: 'eslint-loader',
+            include: __dirname+ '/Src',
+        }
+    ],
     loaders: [
       {
           test: /\.js$/,
