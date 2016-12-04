@@ -1,3 +1,4 @@
+import Options from './Options'
 export default class Utils {
     static supportPerformance() {
         if (
@@ -41,4 +42,38 @@ export default class Utils {
         }
         return pairs.join('&')
     }
+
+    static offset(elem) {
+        let rect
+
+        if ( !elem ) {
+            return
+        }
+        // Support: IE <=11 only
+        // Running getBoundingClientRect on a
+        // disconnected node in IE throws an error
+        let a = elem.getClientRects()
+        if ( !elem.getClientRects().length ) {
+            return { top: 0, left: 0 }
+        }
+
+        rect = elem.getBoundingClientRect()
+
+        // Make sure element is not hidden (display: none)
+        if ( rect.width || rect.height ) {
+            
+            return {
+                top: rect.top + window.pageYOffset - (document.documentElement.clientTop ),
+                left: rect.left + window.pageXOffset - (document.documentElement.clientLeft )
+            }
+        }
+
+        return rect
+    }
+
+    static log(info) {
+        if (Options.getOptions('debug') === true)
+        console.log(info)
+    }
+
 }

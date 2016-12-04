@@ -10,17 +10,21 @@ import Utils from './Utils'
         let options = Options.setOptions(options_),
             _self = this
         
-        if (options.loadtime !== undefined) {
-            this.loadtime = new LoadTime()
-        }
+        //window.addEventListener('load',function(){
+            //alert(1)
+            if (options.loadtime !== undefined) {
+                _self.loadtime = new LoadTime()
+            }
 
-        if (options.network !== undefined) {
-            this.network = new Network()
-        }
+            if (options.network !== undefined) {
+                _self.network = new Network()
+            }
 
-        if (options.error !== undefined) {
-            this.error = new Error_()
-        }
+            if (options.error !== undefined) {
+                _self.error = new Error_()
+            }
+        //})
+        
         
         window.addEventListener('beforeunload',function(e) {
             _self.sendMessage()

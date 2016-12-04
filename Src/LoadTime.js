@@ -1,20 +1,26 @@
 import Utils from './Utils'
+import ATF from './ATF'
 
 export default class LoadTime {
     constructor() {
+        
         this.domContentLoadedTime = -1
+        this.atfed = -1
         this.windowLoaded = -1
 
         //init
         this.setDOMContentLoaded()
         this.setWindowLoeded()
+
+
+        this.setAtfed()
     }
 
     getTime() {
         return {
             unloadEventStart: this.unloadEventStart(),
             domContentLoaded: this.domContentLoadedTime,
-            firstScreen: this.firstScreen(),
+            atf: this.atfed,
             windowLoaded: this.windowLoaded
         }
     }
@@ -71,8 +77,34 @@ export default class LoadTime {
         
     }
 
-    firstScreen() {
-        return -1
+    setAtfed() {
+        let atf = new ATF(),
+            atfSourceURL = atf.sourceURL,
+            atfed = 0,
+            resourceStart = 0,
+            _self = this
+
+        let timer = window.setTimeout(function(){
+
+            if (atfSourceURL.length === 0 ) {
+                window.clearInterval(timer)
+                return 
+            }
+
+            let enties = performance.getEntries(),
+                entriesLength = enties.length
+
+            for (let i = resourceStart; i < entriesLength; i++) {
+                for (let j = atfSourceURL.length - 1; j >= 0; j--) {
+                    if (enties[i].name === atfSourceURL[j] && enties[i].responseEnd >= _self.atfed) {
+                        _self.atfed = enties[i].responseEnd
+                        atfSourceURL.splice(j,1)
+                    }
+                }
+            }
+
+            resourceStart = entriesLength
+        },3000)
     }
 
     setWindowLoeded() {

@@ -6,13 +6,14 @@
 
 <title>loadtime</title>
 
+<link rel="stylesheet" type="text/css" href="./css/style.css">
 <link rel="stylesheet" type="text/css" href="/404css.css">
 </head>
 <body >
 
 <h1>Simple</h1>
-<img id="11" src="img/1px.gif">
-<div id="div" style="background-image: url('img/girl.jpg')">1234</div>
+<img id="11" class="k-report-classLoad" src="img/1px.gif">
+<div id="div" class="k-report-classLoad" style="background-image: url('img/girl.jpg')">1234</div>
 <p>我是一大段文字..我是一大段文字..我是一大段文字</p><br/>
 <p>我是一大段文字..我是一大段文字..我是一大段文字</p><br/>
 <p>我是一大段文字..我是一大段文字..我是一大段文字</p><br/>
@@ -23,9 +24,9 @@
 <p>我是一大段文字..我是一大段文字..我是一大段文字</p><br/>
 <p>我是一大段文字..我是一大段文字..我是一大段文字</p><br/>
 
-<img id="33" src="img/girl2.jpg"><br/>
-<img id="44" src="img/error.jpg"><br/>
-<div id="div" style="background-image: url('img/error2.jpg')">1234</div>
+<img id="33" class="k-report-classLoad" src="img/girl2.jpg"><br/>
+<img id="44" class="k-report-classLoad" src="img/error.jpg"><br/>
+<div id="div" class="k-report-classLoad" style="background-image: url('img/error2.jpg')">1234</div>
 <script type="text/javascript" src="../../Public/error.bundle.js"></script>
 
 See to console
@@ -38,7 +39,13 @@ See to console
 </script>
 <script type="text/javascript">
 
-    abc()
+    
+    document.addEventListener('load',function(e){ 
+   // console.log(JSON.stringify(e))
+   //  console.log(e.target)
+     //abc()
+    //console.log(JSON.stringify(e.traget()))
+},true)
 </script>
 <script type="text/javascript">
     
