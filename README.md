@@ -38,7 +38,7 @@ Close it on the web, send a statistical package
 
 ## DEMO
 
-http://my.apache.com/K-Report/Example/loadtime/index.html
+<http://k-report.404mzk.com/Example/loadtime/index.html>
 
 Try to send the report on the console to perform `KReport.sendMessage()` active packet
 

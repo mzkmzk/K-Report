@@ -1,6 +1,6 @@
 {
   "name": "K-Report",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hope this is the best report you used library ",
   "main": "Public/index.bundle.js",
   "scripts": {
