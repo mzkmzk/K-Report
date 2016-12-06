@@ -3,7 +3,7 @@ export default class Options {
        return {
             'debug': true,
             'loadtime': {
-                'url': 'http://k-report.404mzk.com/Receive/loadtime',
+                'url': 'http://k-inner-report.404mzk.com/v1/Creator_Loadtime_Controller/insert',
                 'classLoad': '.k-report-classLoad', //空的情况则默认去搜索
                 'random': 0
                 /*'sourceType': [
@@ -13,13 +13,13 @@ export default class Options {
                 'upSourceATC': true*/
             },
             'network': {
-                'url': 'http://k-report.404mzk.com/Receive/network',
+                'url': 'http://k-inner-report.404mzk.com/v1/Creator_Network_Controller/insert',
                 'timer': 5000,
                 'timeout': 2,
                 'random': 0
             },
             'error': {
-                'url': 'http://k-report.404mzk.com/Receive/error',
+                'url': 'http://k-inner-report.404mzk.com/v1/Creator_Error_Controller/insert',
                 'random': 0
             }
        }

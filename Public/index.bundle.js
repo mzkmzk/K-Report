@@ -137,18 +137,36 @@
 	            var options = _Options2.default.getOptions();
 
 	            if (this.loadtime !== undefined) {
-	                var img = new Image();
+	                var max = options.loadtime.random,
+	                    img = new Image();
+
+	                if (max && _Utils2.default.getRandomInt(0, max) !== 0) return;
+
 	                img.src = _Utils2.default.urlAppendData(options.loadtime.url, this.loadtime.getTime());
 	            }
 
 	            if (this.network !== undefined) {
-	                var _img = new Image();
-	                _img.src = _Utils2.default.urlAppendData(options.network.url, this.network.resourceTimeOut);
+	                var _img = new Image(),
+	                    _max = options.network.random,
+	                    params = {
+	                    k_creator_entities: this.network.resourceTimeOut
+	                };
+
+	                if (_max && _Utils2.default.getRandomInt(0, _max) !== 0) return;
+
+	                _img.src = _Utils2.default.urlAppendData(options.network.url, params);
 	            }
 
 	            if (this.error !== undefined) {
-	                var _img2 = new Image();
-	                _img2.src = _Utils2.default.urlAppendData(options.error.url, this.error.message);
+	                var _img2 = new Image(),
+	                    _max2 = options.error.random,
+	                    _params = {
+	                    k_creator_entities: this.error.message
+	                };
+
+	                if (_max2 && _Utils2.default.getRandomInt(0, _max2) !== 0) return;
+
+	                _img2.src = _Utils2.default.urlAppendData(options.error.url, _params);
 	            }
 	        }
 	    }]);
@@ -201,10 +219,11 @@
 	        key: 'getTime',
 	        value: function getTime() {
 	            return {
-	                unloadEventStart: this.unloadEventStart(),
-	                domContentLoaded: this.domContentLoadedTime,
+	                unload_event_start: this.unloadEventStart(),
+	                dom_content_loaded: this.domContentLoadedTime,
 	                atf: this.atfed,
-	                windowLoaded: this.windowLoaded
+	                window_loaded: this.windowLoaded,
+	                referer: location.href
 	            };
 	        }
 	    }, {
@@ -405,6 +424,13 @@
 	        value: function log(info) {
 	            if (_Options2.default.getOptions('debug') === true) console.log(info);
 	        }
+	    }, {
+	        key: 'getRandomInt',
+	        value: function getRandomInt(min, max) {
+	            var _min = Math.ceil(min),
+	                _max = Math.floor(max);
+	            return Math.floor(Math.random() * (_max - _min + 1)) + _min;
+	        }
 	    }]);
 
 	    return Utils;
@@ -437,7 +463,7 @@
 	            return {
 	                'debug': true,
 	                'loadtime': {
-	                    'url': 'http://k-report.404mzk.com/Receive/loadtime',
+	                    'url': 'http://k-inner-report.404mzk.com/v1/Creator_Loadtime_Controller/insert',
 	                    'classLoad': '.k-report-classLoad', //空的情况则默认去搜索
 	                    'random': 0
 	                    /*'sourceType': [
@@ -447,13 +473,13 @@
 	                    'upSourceATC': true*/
 	                },
 	                'network': {
-	                    'url': 'http://k-report.404mzk.com/Receive/network',
+	                    'url': 'http://k-inner-report.404mzk.com/v1/Creator_Network_Controller/insert',
 	                    'timer': 5000,
 	                    'timeout': 2,
 	                    'random': 0
 	                },
 	                'error': {
-	                    'url': 'http://k-report.404mzk.com/Receive/error',
+	                    'url': 'http://k-inner-report.404mzk.com/v1/Creator_Error_Controller/insert',
 	                    'random': 0
 	                }
 	            };
@@ -646,7 +672,8 @@
 	                if (enties[i].duration > timeout) {
 	                    var timeoutObj = {
 	                        'duration': enties[i].duration,
-	                        'url': enties[i].name
+	                        'url': enties[i].name,
+	                        'referer': location.href
 	                    };
 	                    this.resourceTimeOut.push(timeoutObj);
 	                }
@@ -693,9 +720,12 @@
 	            window.addEventListener('error', function (e) {
 	                if (e.message !== undefined) return true; //脚本错误的情况交给window.onerror
 	                _self.message.push({
-	                    id: e.target.id,
-	                    className: e.target.className,
-	                    url: e.target.currentSrc || e.target.href
+	                    '_id': e.target.id,
+	                    'class_name': e.target.className,
+	                    'url': e.target.currentSrc || e.target.href,
+	                    'referer': location.href
+
+	                    //message: e.message || '' 
 	                });
 	                return true;
 	            }, true);
@@ -717,7 +747,8 @@
 	                        'url': url,
 	                        'line': lineNo,
 	                        'column': columnNo,
-	                        'object': JSON.stringify(error)
+	                        'object': JSON.stringify(error),
+	                        'referer': location.href
 	                    };
 
 	                    _self.message.push(message);

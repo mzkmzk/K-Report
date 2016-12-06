@@ -76,4 +76,10 @@ export default class Utils {
         console.log(info)
     }
 
+    static getRandomInt(min,max) {
+        let _min = Math.ceil(min),
+            _max = Math.floor(max)
+        return Math.floor(Math.random() * (_max - _min + 1 )) + _min
+    }
+
 }

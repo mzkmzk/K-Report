@@ -36,18 +36,36 @@ import Utils from './Utils'
         let options =  Options.getOptions()
 
         if (this.loadtime !== undefined) {
-            let img = new Image()
+            let max = options.loadtime.random,
+                 img = new Image()
+
+            if (max && Utils.getRandomInt(0,max) !== 0) return
+            
             img.src = Utils.urlAppendData(options.loadtime.url,this.loadtime.getTime())
         }
 
         if (this.network !== undefined) {
-            let img = new Image()
-            img.src = Utils.urlAppendData(options.network.url,this.network.resourceTimeOut)
+            let img = new Image(),
+                max = options.network.random,
+                params = {
+                    k_creator_entities: this.network.resourceTimeOut
+                }
+
+            if (max && Utils.getRandomInt(0,max) !== 0) return
+
+            img.src = Utils.urlAppendData(options.network.url,params)
         }
 
         if (this.error !== undefined) {
-            let img = new Image()
-            img.src = Utils.urlAppendData(options.error.url,this.error.message)
+            let img = new Image(),
+                max = options.error.random,
+                params = {
+                    k_creator_entities: this.error.message
+                }
+
+            if (max && Utils.getRandomInt(0,max) !== 0) return
+                
+            img.src = Utils.urlAppendData(options.error.url,params)
         }
     }
 }

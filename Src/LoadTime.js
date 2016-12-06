@@ -18,10 +18,11 @@ export default class LoadTime {
 
     getTime() {
         return {
-            unloadEventStart: this.unloadEventStart(),
-            domContentLoaded: this.domContentLoadedTime,
+            unload_event_start: this.unloadEventStart(),
+            dom_content_loaded: this.domContentLoadedTime,
             atf: this.atfed,
-            windowLoaded: this.windowLoaded
+            window_loaded: this.windowLoaded,
+            referer: location.href
         }
     }
 

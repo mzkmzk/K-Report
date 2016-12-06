@@ -13,9 +13,11 @@
         window.addEventListener('error', function(e) {
             if (e.message !== undefined) return true //脚本错误的情况交给window.onerror
             _self.message.push({
-                id: e.target.id,
-                className: e.target.className,
-                url: e.target.currentSrc || e.target.href,
+                '_id': e.target.id,
+                'class_name': e.target.className,
+                'url': e.target.currentSrc || e.target.href,
+                'referer': location.href
+
                 //message: e.message || '' 
             })
             return true
@@ -40,7 +42,8 @@
                     'url': url,
                     'line': lineNo,
                     'column': columnNo,
-                    'object': JSON.stringify(error)
+                    'object': JSON.stringify(error),
+                    'referer': location.href
                 }
 
                 _self.message.push(message)

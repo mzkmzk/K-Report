@@ -32,7 +32,8 @@ export default class Network {
             if (enties[i].duration > timeout) {
                 let timeoutObj = {
                     'duration': enties[i].duration,
-                    'url': enties[i].name
+                    'url': enties[i].name,
+                    'referer': location.href
                 }
                 this.resourceTimeOut.push(timeoutObj)
             }
