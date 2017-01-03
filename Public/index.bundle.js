@@ -230,9 +230,9 @@
 	        key: 'unloadEventStart',
 	        value: function unloadEventStart() {
 	            if (_Utils2.default.supportPerformance()) {
-	                return performance.timing.unloadEventStart;
+	                return performance.timing.unloadEventStart || performance.timing.fetchStart;
 	            } else {
-	                return -1;
+	                return _Utils2.default.now();
 	            }
 	        }
 	    }, {
@@ -298,7 +298,7 @@
 	                for (var i = resourceStart; i < entriesLength; i++) {
 	                    for (var j = atfSourceURL.length - 1; j >= 0; j--) {
 	                        if (enties[i].name === atfSourceURL[j] && enties[i].responseEnd >= _self.atfed) {
-	                            _self.atfed = enties[i].responseEnd;
+	                            _self.atfed = enties[i].responseEnd.toFixed(2);
 	                            atfSourceURL.splice(j, 1);
 	                        }
 	                    }
@@ -360,7 +360,7 @@
 	        key: 'now',
 	        value: function now() {
 	            if (Utils.supportPerformance()) {
-	                return window.performance.now();
+	                return window.performance.now().toFixed(2);
 	            } else {
 	                return Date.now();
 	            }
@@ -383,7 +383,8 @@
 	            for (var name in data) {
 	                if (!data.hasOwnProperty(name)) continue;
 	                if (typeof data[name] === 'function') continue;
-	                var value = JSON.stringify(data[name]);
+	                var value = data[name] instanceof Object ? JSON.stringify(data[name]) : data[name] + '';
+
 	                name = encodeURIComponent(name.replace('%20', '+'));
 	                value = encodeURIComponent(value.replace('%20', '+'));
 	                pairs.push(name + '=' + value);
@@ -553,6 +554,11 @@
 
 	        this.findSourceURL();
 	    }
+
+	    /**
+	     * 查找首屏元素
+	     */
+
 
 	    _createClass(ATF, [{
 	        key: 'findSourceURL',

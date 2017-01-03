@@ -10,7 +10,9 @@ export default class ATF {
         this.findSourceURL()
     }
 
-
+    /**
+     * 查找首屏元素
+     */
     findSourceURL() {
         let classLoad = this.options.loadtime.classLoad,
             elems = document.querySelectorAll(classLoad)

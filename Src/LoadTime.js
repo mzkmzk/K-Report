@@ -28,9 +28,9 @@ export default class LoadTime {
 
     unloadEventStart() {
         if (Utils.supportPerformance()) {
-            return performance.timing.unloadEventStart
+            return performance.timing.unloadEventStart || performance.timing.fetchStart
         }else {
-            return -1
+            return Utils.now()
         }
     }
 
@@ -98,7 +98,7 @@ export default class LoadTime {
             for (let i = resourceStart; i < entriesLength; i++) {
                 for (let j = atfSourceURL.length - 1; j >= 0; j--) {
                     if (enties[i].name === atfSourceURL[j] && enties[i].responseEnd >= _self.atfed) {
-                        _self.atfed = enties[i].responseEnd
+                        _self.atfed = enties[i].responseEnd.toFixed(2)
                         atfSourceURL.splice(j,1)
                     }
                 }

@@ -14,7 +14,7 @@ export default class Utils {
 
     static now() {
         if(Utils.supportPerformance()) {
-            return window.performance.now()
+            return window.performance.now().toFixed(2)
         }else {
             return Date.now()
         }
@@ -35,7 +35,8 @@ export default class Utils {
         for(var name in data) {
             if(!data.hasOwnProperty(name)) continue
             if(typeof data[name] === 'function') continue
-            var value = JSON.stringify(data[name])
+            var value =  data[name] instanceof Object ? JSON.stringify(data[name]) : data[name] + ''
+
             name = encodeURIComponent(name.replace('%20','+'))
             value = encodeURIComponent(value.replace('%20','+'))
             pairs.push(name + '=' + value)

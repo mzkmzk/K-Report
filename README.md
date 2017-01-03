@@ -69,6 +69,13 @@ npm i --save npm install K-Report
 | error    | url       | string  | http://k-inner-report.404mzk.com/v1/Creator_Error_Controller/insert    | The url of the data report                                      |
 |          | random    | number  | 0                                                                      | The number of random report 0 to send every time                |
 
+# Data Abnormal
+
+## Loadtime
+
+1. atf === -1 : 用户刷新过快,还没统计首屏时间
+2. atf > window_loaded : 用户刷新过快,还没统计完首屏时间
+
 ## Report Data
 
 
