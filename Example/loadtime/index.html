@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 
 <title>loadtime</title>
+<script type="text/javascript" src="../../Public/index.bundle.js"></script>
 
 <link rel="stylesheet" type="text/css" href="./css/style.css">
 <link rel="stylesheet" type="text/css" href="/404css.css">
+
 </head>
 <body >
 
@@ -33,59 +35,30 @@ See to console
 
 
 
-<script type="text/javascript" src="../../Public/index.bundle.js"></script>
 <script type="text/javascript">
-    KReport.setOptions()
-</script>
-<script type="text/javascript">
+var flag = true;  
+if( !(navigator.userAgent.indexOf("MSIE")>0 && navigator.userAgent.indexOf("MSIE 8.0")>0))  {   
+    var k_tmp = function(){
+        KReport.setOptions();
+        alert(1);
+    }
+    var s = document.createElement('script');
+  s.type = 'text/javascript';
+  //s.async = true;
+  s.onload = k_tmp;
+  s.src = '../../Public/index.bundle.js';
+  var x = document.getElementsByTagName('script')[0];
+  x.parentNode.insertBefore(s, x);
+  alert(2);
+  alert(3);
+  alert(4);
+  alert(5);
+  alert(6);
 
-    abc()
-    //document.addEventListener('load',function(e){ 
-   // console.log(JSON.stringify(e))
-   //  console.log(e.target)
-     //abc()
-    //console.log(JSON.stringify(e.traget()))
-//},true)
-</script>
-<script type="text/javascript">
     
+} 
+    //abc()
+   
 </script>
-<!--
-<script type="text/javascript">
-document.addEventListener('load',function(e){ 
-    console.log(JSON.stringify(e))
-     console.log(e.target)
-    //console.log(JSON.stringify(e.traget()))
-},true)
-
-
-window.addEventListener('error', function(e) {
-    console.log(e);
-}, true);
-
-document.addEventListener('error', function(e) {
-    console.log(e);
-}, true);
-
- window.onerror = function (msg, url, lineNo, columnNo, error) {
-            var string = msg.toLowerCase();
-            var substring = "script error";
-            if (string.indexOf(substring) > -1){
-                console.log('Script Error: See Browser Console for Detail');
-            } else {
-                var message = [
-                    'Message: ' + msg,
-                    'URL: ' + url,
-                    'Line: ' + lineNo,
-                    'Column: ' + columnNo,
-                    'Error object: ' + JSON.stringify(error)
-                ].join(' - ');
-
-                console.log(message);
-            }
-
-            return true;
-        }
-</script>-->
 </body>
 </html>

@@ -31,7 +31,7 @@ export default class Network {
         for (var i = resourceStart; i < entriesLength; i++) {
             if (enties[i].duration > timeout) {
                 let timeoutObj = {
-                    'duration': enties[i].duration,
+                    'duration': enties[i].duration.toFixed(2),
                     'url': enties[i].name,
                     'referer': location.href
                 }

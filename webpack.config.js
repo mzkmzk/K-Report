@@ -1,3 +1,8 @@
+var webpack = require('webpack');
+var path = require('path');
+var libraryName = 'k_report';
+var outputFile = libraryName + '.js';
+
 module.exports = {
   entry: {
         index: './Src/Index',
@@ -5,7 +10,10 @@ module.exports = {
     //devtool: "cheap-module-source-map",
   output: {
     path: 'Public',
-    filename: 'index.bundle.js'
+    filename: 'index.bundle.js',
+    library: libraryName,
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     preLoaders: [
