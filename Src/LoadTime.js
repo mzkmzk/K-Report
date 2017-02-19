@@ -77,22 +77,26 @@ export default class LoadTime {
         
         
     }
-
+    
     setAtfed() {
         let atf = new ATF(),
-            atfSourceURL = atf.sourceURL,
+            atfSourceURL = atf.sourceURL, //索引传递
             atfed = 0,
             resourceStart = 0,
             _self = this
+        //思路 定时器(会丢掉秒关和 网速极慢下不准) window.onload(单页下不准)  关闭网页前(秒关情况下不准)
 
-        let timer = window.setTimeout(function(){
 
-            if (atfSourceURL.length === 0 ) {
-                window.clearInterval(timer)
-                return 
-            }
 
-            let enties = performance.getEntries(),
+         window.addEventListener('load',function(e) {
+            if (  _self.windowLoaded === -1) return ;//秒关情况下不算
+
+            //if (atfSourceURL.length === 0 ) {
+                //window.clearInterval(timer)
+            //    return 
+            //}
+
+            let entriesLength = performance.getEntries(),
                 entriesLength = enties.length
 
             for (let i = resourceStart; i < entriesLength; i++) {
@@ -105,7 +109,12 @@ export default class LoadTime {
             }
 
             resourceStart = entriesLength
-        },3000)
+        })
+
+        //let timer = window.setTimeout(function(){
+
+            
+        //},3000)
     }
 
     setWindowLoeded() {

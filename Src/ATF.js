@@ -6,8 +6,20 @@ export default class ATF {
     constructor() {
         this.options = Options.getOptions()
         this.sourceURL = []
-
+        this.loadListener()
         this.findSourceURL()
+    }
+
+    /**
+     * 主动监听img
+     */ 
+    loadListener() {
+        let _self = this
+        document.addEventListener('load',function(e){
+            if (e.path && e.path[0] && _self.isInATF(e.path[0]) && _self.sourceURL.indexOf(e.path[0].src) === -1) {
+                this.sourceURL.push(e.path[0].src)
+            }
+        },true)
     }
 
     /**
@@ -41,6 +53,8 @@ export default class ATF {
     }
 
     isInATF(element) {
+        //需要判断是否为element 待加
+
         let windowHeight = document.documentElement.clientHeight,
             elemTop = Utils.offset(element).top
 

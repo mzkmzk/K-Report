@@ -36,10 +36,16 @@ See to console
 
 
 <script type="text/javascript">
+
+  document.addEventListener("load", function(event) {
+    console.log(event.target);
+    console.log(event);
+  },true);
+
 var flag = true;  
 if( !(navigator.userAgent.indexOf("MSIE")>0 && navigator.userAgent.indexOf("MSIE 8.0")>0))  {   
     var k_tmp = function(){
-        KReport.setOptions();
+        k_report.default.setOptions();
         alert(1);
     }
     var s = document.createElement('script');
@@ -49,11 +55,7 @@ if( !(navigator.userAgent.indexOf("MSIE")>0 && navigator.userAgent.indexOf("MSIE
   s.src = '../../Public/index.bundle.js';
   var x = document.getElementsByTagName('script')[0];
   x.parentNode.insertBefore(s, x);
-  alert(2);
-  alert(3);
-  alert(4);
-  alert(5);
-  alert(6);
+
 
     
 } 

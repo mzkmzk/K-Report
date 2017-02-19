@@ -1,11 +1,11 @@
 var webpack = require('webpack');
 var path = require('path');
 var libraryName = 'k_report';
-var outputFile = libraryName + '.js';
+
 
 module.exports = {
   entry: {
-        index: './Src/Index',
+        index: './Src/KReport',
     },
     //devtool: "cheap-module-source-map",
   output: {

@@ -70,5 +70,7 @@ import Utils from './Utils'
     }
 }
 
-export default new KReport()
+let singple = new KReport()
+window.KReport = singple //兼容之前
+export default singple
 

@@ -1,11 +1,9 @@
 {
   "name": "k-report",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "Hope this is the best report you used library ",
-  "main": "Public/index.bundle.js",
-  "scripts": {
-    "test": "jest"
-  },
+  "main": "index.bundle.js",
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mzkmzk/K-Report.git"
@@ -32,7 +30,6 @@
     "eslint": "3.0.1",
     "eslint-loader": "1.4.0",
     "eslint-plugin-react": "5.2.2",
-    "jest": "18.1.0",
     "webpack": "1.13.1"
   }
 }

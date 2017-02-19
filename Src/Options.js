@@ -42,7 +42,7 @@ export default class Options {
     }
 
     static getOptions(key) {
-        let options = Options.options || Options.defaultOptions()
+        let options = Options.Options || Options.defaultOptions()
         
         if (key == undefined) return options
         
