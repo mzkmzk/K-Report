@@ -7,6 +7,9 @@ import Utils from './Utils'
  class KReport {
 
     setOptions(options_) {
+        
+        if( !Utils.supportPerformance() )  return
+
         let options = Options.setOptions(options_),
             _self = this
         
@@ -28,6 +31,11 @@ import Utils from './Utils'
         
         window.addEventListener('beforeunload',function(e) {
             _self.sendMessage()
+            if (options.debug === true) {
+                e.message = '你确定要离开吗?'
+                return '你确定要离开吗？'
+            }
+            
             //e.returnValue = "\o/"
         })
     }

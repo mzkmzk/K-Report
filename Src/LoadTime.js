@@ -89,14 +89,14 @@ export default class LoadTime {
 
 
          window.addEventListener('load',function(e) {
-            if (  _self.windowLoaded === -1) return ;//秒关情况下不算
+            if (  _self.windowLoaded === -1) return //秒关情况下不算
 
             //if (atfSourceURL.length === 0 ) {
                 //window.clearInterval(timer)
             //    return 
             //}
 
-            let entriesLength = performance.getEntries(),
+            let enties = performance.getEntries(),
                 entriesLength = enties.length
 
             for (let i = resourceStart; i < entriesLength; i++) {

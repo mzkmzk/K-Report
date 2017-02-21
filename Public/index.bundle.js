@@ -88,6 +88,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    KReport.prototype.setOptions = function setOptions(options_) {
+
+	        if (!_Utils2['default'].supportPerformance()) return;
+
 	        var options = _Options2['default'].setOptions(options_),
 	            _self = this;
 
@@ -109,6 +112,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        window.addEventListener('beforeunload', function (e) {
 	            _self.sendMessage();
+	            if (options.debug === true) {
+	                e.message = '你确定要离开吗?';
+	                return '你确定要离开吗？';
+	            }
+
 	            //e.returnValue = "\o/"
 	        });
 	    };
@@ -253,16 +261,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    LoadTime.prototype.setAtfed = function setAtfed() {
 	        var atf = new _ATF2['default'](),
 	            atfSourceURL = atf.sourceURL,
-	            atfed = 0,
+	            //索引传递
+	        atfed = 0,
 	            resourceStart = 0,
 	            _self = this;
+	        //思路 定时器(会丢掉秒关和 网速极慢下不准) window.onload(单页下不准)  关闭网页前(秒关情况下不准)
 
-	        var timer = window.setTimeout(function () {
 
-	            if (atfSourceURL.length === 0) {
-	                window.clearInterval(timer);
-	                return;
-	            }
+	        window.addEventListener('load', function (e) {
+	            if (_self.windowLoaded === -1) return; //秒关情况下不算
+
+	            //if (atfSourceURL.length === 0 ) {
+	            //window.clearInterval(timer)
+	            //    return 
+	            //}
 
 	            var enties = performance.getEntries(),
 	                entriesLength = enties.length;
@@ -277,7 +289,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            resourceStart = entriesLength;
-	        }, 3000);
+	        });
+
+	        //let timer = window.setTimeout(function(){
+
+
+	        //},3000)
 	    };
 
 	    LoadTime.prototype.setWindowLoeded = function setWindowLoeded() {
@@ -495,9 +512,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.options = _Options2['default'].getOptions();
 	        this.sourceURL = [];
-
+	        this.loadListener();
 	        this.findSourceURL();
 	    }
+
+	    /**
+	     * 主动监听img
+	     */
+
+
+	    ATF.prototype.loadListener = function loadListener() {
+	        var _self = this;
+	        document.addEventListener('load', function (e) {
+	            if (e.path && e.path[0] && _self.isInATF(e.path[0]) && _self.sourceURL.indexOf(e.path[0].src) === -1) {
+	                _self.sourceURL.push(e.path[0].src);
+	            }
+	        }, true);
+	    };
 
 	    /**
 	     * 查找首屏元素
@@ -530,6 +561,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    ATF.prototype.isInATF = function isInATF(element) {
+	        //需要判断是否为element 待加
+
 	        var windowHeight = document.documentElement.clientHeight,
 	            elemTop = _Utils2['default'].offset(element).top;
 
@@ -583,22 +616,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Network() {
 	        _classCallCheck(this, Network);
 
+	        var _self = this;
 	        this.resourceTimeOut = [];
 
-	        this.setTimer();
-	    }
-
-	    Network.prototype.setTimer = function setTimer() {
-	        var time = _Options2['default'].getOptions('network').timer,
-	            _self = this;
-	        time = time < 5000 ? 5000 : time;
-	        var timer = setInterval(function () {
+	        window.addEventListener('beforeunload', function (e) {
 	            if (_Utils2['default'].supportPerformance()) {
 	                _self.performanceTimer();
-	            } else {}
-	        }, time);
-	        return timer;
-	    };
+	            }
+	        });
+	        //this.setTimer()
+	    }
+
+	    /*setTimer() {
+	        let time = Options.getOptions('network').timer,
+	            _self = this
+	        time = time < 5000 ? 5000 : time
+	        let timer = setInterval(function(){
+	            if( Utils.supportPerformance() ) {
+	                _self.performanceTimer()
+	            }else {
+	             }
+	        },time)
+	        return timer
+	    }*/
 
 	    Network.prototype.performanceTimer = function performanceTimer() {
 	        var timeout = parseInt(_Options2['default'].getOptions('network').timeout),
@@ -639,39 +679,70 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Error_() {
 	        _classCallCheck(this, Error_);
 
-	        this.message = [];
+	        this.message = window._k_report_error ? this.resolverEvent(window._k_report_error) : [];
 
 	        this.setOnError();
 	    }
 
+	    Error_.prototype.resolverEvent = function resolverEvent(error_array) {
+	        var message_array = [],
+	            e = void 0;
+
+	        if (!(error_array instanceof Array)) error_array = [error_array];
+
+	        for (var i = 0; i < error_array.length; i++) {
+	            e = error_array[i];
+	            try {
+	                if (e.message === undefined) {
+	                    //静态资源错误
+	                    message_array.push({
+	                        '_id': e.target.id || '',
+	                        'class_name': e.target.className,
+	                        'url': e.target.currentSrc || e.target.href,
+	                        'referer': location.href
+
+	                        //message: e.message || '' 
+	                    });
+	                } else {
+	                    //JS错误
+	                    message_array.push({
+	                        'message': e.message,
+	                        'url': e.filename,
+	                        'line': e.lineno,
+	                        'column': e.colno,
+	                        'object': e.error && e.error.stack,
+	                        'referer': location.href
+	                        //message: e.message || '' 
+	                    });
+	                }
+	            } catch (e) {
+	                message_array.push('K-Report Error Listener Error');
+	            }
+	        }
+
+	        return message_array;
+	    };
+
 	    Error_.prototype.setOnError = function setOnError() {
-	        var windowOnerror = window.onerror,
-	            _self = this;
-
+	        var //windowOnerror = window.onerror,
+	        _self = this;
+	        //静态资源
 	        window.addEventListener('error', function (e) {
-	            if (e.message !== undefined) return true; //脚本错误的情况交给window.onerror
-	            _self.message.push({
-	                '_id': e.target.id,
-	                'class_name': e.target.className,
-	                'url': e.target.currentSrc || e.target.href,
-	                'referer': location.href
-
-	                //message: e.message || '' 
-	            });
+	            _self.message = _self.message.concat(_self.resolverEvent(e));
 	            return true;
 	        }, true);
 
+	        //脚本错误
+	        /*
 	        window.onerror = function (msg, url, lineNo, columnNo, error) {
-	            var string = msg.toLowerCase(),
-	                substring = 'script error',
-	                message = '';
-
-	            if (windowOnerror !== null) windowOnerror(msg, url, lineNo, columnNo, error);
-
-	            if (string.indexOf(substring) > -1) {
+	            let string = msg.toLowerCase(),
+	               substring = 'script error',
+	               message = ''
+	             if (windowOnerror !== null) windowOnerror(msg, url, lineNo, columnNo, error) 
+	             if (string.indexOf(substring) > -1){
 	                message = {
 	                    'message': 'Script Error: See Browser Console for Detail'
-	                };
+	                }
 	            } else {
 	                message = {
 	                    'message': msg,
@@ -680,13 +751,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    'column': columnNo,
 	                    'object': JSON.stringify(error),
 	                    'referer': location.href
-	                };
-
-	                _self.message.push(message);
+	                }
+	                 _self.message.push(message)
 	            }
-
-	            return false;
-	        };
+	             return false
+	        }*/
 	    };
 
 	    return Error_;

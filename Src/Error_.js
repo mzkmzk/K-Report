@@ -41,7 +41,7 @@
             }
         }
         
-        return message_array;
+        return message_array
     }
 
     setOnError() {

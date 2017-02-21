@@ -3,12 +3,18 @@ import Options from './Options'
 
 export default class Network {
     constructor() {
+        var _self = this
         this.resourceTimeOut = []
 
-        this.setTimer()
+        window.addEventListener('beforeunload',function(e) {
+            if( Utils.supportPerformance() ) {
+                _self.performanceTimer()
+            }
+        })
+        //this.setTimer()
     }
 
-    setTimer() {
+    /*setTimer() {
         let time = Options.getOptions('network').timer,
             _self = this
         time = time < 5000 ? 5000 : time
@@ -20,7 +26,7 @@ export default class Network {
             }
         },time)
         return timer
-    }
+    }*/
 
     performanceTimer() {
         let timeout = parseInt(Options.getOptions('network').timeout),

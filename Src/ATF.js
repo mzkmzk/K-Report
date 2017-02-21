@@ -17,7 +17,7 @@ export default class ATF {
         let _self = this
         document.addEventListener('load',function(e){
             if (e.path && e.path[0] && _self.isInATF(e.path[0]) && _self.sourceURL.indexOf(e.path[0].src) === -1) {
-                this.sourceURL.push(e.path[0].src)
+                _self.sourceURL.push(e.path[0].src)
             }
         },true)
     }

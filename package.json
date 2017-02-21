@@ -4,7 +4,8 @@
   "description": "Hope this is the best report you used library ",
   "main": "Public/index.bundle.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "publish": "webpack && cd Public && npm publish"
   },
   "repository": {
     "type": "git",
