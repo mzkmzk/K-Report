@@ -189,9 +189,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function LoadTime() {
 	        _classCallCheck(this, LoadTime);
 
-	        this.domContentLoadedTime = -1;
-	        this.atfed = -1;
-	        this.windowLoaded = -1;
+	        this.domContentLoadedTime = this.unloadEventStart();
+	        this.atfed = -1; //this.unloadEventStart()
+	        this.windowLoaded = this.unloadEventStart();
 
 	        //init
 	        this.setDOMContentLoaded();
@@ -206,13 +206,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            dom_content_loaded: this.domContentLoadedTime,
 	            atf: this.atfed,
 	            window_loaded: this.windowLoaded,
-	            referer: location.href
+	            referer: location.href,
+	            user_agent: navigator.userAgent
 	        };
 	    };
 
 	    LoadTime.prototype.unloadEventStart = function unloadEventStart() {
 	        if (_Utils2['default'].supportPerformance()) {
-	            return performance.timing.unloadEventStart || performance.timing.fetchStart;
+	            return performance.timing.unloadEventStart || performance.timing.fetchStart || _Utils2['default'].now(); //有记录这个为0,但是没记录到useragent
 	        } else {
 	            return _Utils2['default'].now();
 	        }
@@ -699,7 +700,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        '_id': e.target.id || '',
 	                        'class_name': e.target.className,
 	                        'url': e.target.currentSrc || e.target.href,
-	                        'referer': location.href
+	                        'referer': location.href,
+	                        'user_agent': navigator.userAgent
 
 	                        //message: e.message || '' 
 	                    });
@@ -711,7 +713,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        'line': e.lineno,
 	                        'column': e.colno,
 	                        'object': e.error && e.error.stack,
-	                        'referer': location.href
+	                        'referer': location.href,
+	                        'user_agent': navigator.userAgent
 	                        //message: e.message || '' 
 	                    });
 	                }

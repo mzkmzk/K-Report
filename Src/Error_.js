@@ -21,7 +21,8 @@
                         '_id': e.target.id || '',
                         'class_name': e.target.className,
                         'url': e.target.currentSrc || e.target.href,
-                        'referer': location.href
+                        'referer': location.href,
+                        'user_agent': navigator.userAgent
 
                         //message: e.message || '' 
                     })
@@ -32,7 +33,8 @@
                         'line': e.lineno,
                         'column': e.colno,
                         'object': e.error && e.error.stack,
-                        'referer': location.href
+                        'referer': location.href,
+                        'user_agent': navigator.userAgent
                         //message: e.message || '' 
                     })
                 }

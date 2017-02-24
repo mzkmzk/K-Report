@@ -4,9 +4,9 @@ import ATF from './ATF'
 export default class LoadTime {
     constructor() {
         
-        this.domContentLoadedTime = -1
-        this.atfed = -1
-        this.windowLoaded = -1
+        this.domContentLoadedTime = this.unloadEventStart()
+        this.atfed = -1 //this.unloadEventStart()
+        this.windowLoaded = this.unloadEventStart()
 
         //init
         this.setDOMContentLoaded()
@@ -22,13 +22,14 @@ export default class LoadTime {
             dom_content_loaded: this.domContentLoadedTime,
             atf: this.atfed,
             window_loaded: this.windowLoaded,
-            referer: location.href
+            referer: location.href,
+            user_agent: navigator.userAgent
         }
     }
 
     unloadEventStart() {
         if (Utils.supportPerformance()) {
-            return performance.timing.unloadEventStart || performance.timing.fetchStart
+            return performance.timing.unloadEventStart || performance.timing.fetchStart || Utils.now() //有记录这个为0,但是没记录到useragent
         }else {
             return Utils.now()
         }
