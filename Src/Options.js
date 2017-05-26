@@ -5,7 +5,7 @@ export default class Options {
             'loadtime': {
                 'url': 'http://k-inner-report.404mzk.com/v1/Creator_Loadtime_Controller/insert',
                 'classLoad': '.k-report-classLoad', //空的情况则默认去搜索
-                'random': 0
+                'random': 100
                 /*'sourceType': [
                     'img',
                     'background-image'

@@ -54,8 +54,9 @@ export default class Utils {
         // Running getBoundingClientRect on a
         // disconnected node in IE throws an error
         let a = elem.getClientRects()
-        if ( !elem.getClientRects().length ) {
-            return { top: 0, left: 0 }
+        if ( !elem.getClientRects().length ) { //元素隐藏情况下也会进入这里
+             return { top: 999999, left: 9999999 }
+            //return { top: 0, left: 0 }
         }
 
         rect = elem.getBoundingClientRect()
@@ -73,7 +74,7 @@ export default class Utils {
     }
 
     static log(info) {
-        if (Options.getOptions('debug') === true)
+        if (Options.getOptions('debug') === true || location.href.indexOf('k-report-debug=true') !== -1)
         console.log(info)
     }
 

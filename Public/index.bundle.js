@@ -382,7 +382,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // disconnected node in IE throws an error
 	        var a = elem.getClientRects();
 	        if (!elem.getClientRects().length) {
-	            return { top: 0, left: 0 };
+	            //元素隐藏情况下也会进入这里
+	            return { top: 999999, left: 9999999 };
+	            //return { top: 0, left: 0 }
 	        }
 
 	        rect = elem.getBoundingClientRect();
@@ -400,7 +402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    Utils.log = function log(info) {
-	        if (_Options2['default'].getOptions('debug') === true) console.log(info);
+	        if (_Options2['default'].getOptions('debug') === true || location.href.indexOf('k-report-debug=true') !== -1) console.log(info);
 	    };
 
 	    Utils.getRandomInt = function getRandomInt(min, max) {
@@ -435,7 +437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'loadtime': {
 	                'url': 'http://k-inner-report.404mzk.com/v1/Creator_Loadtime_Controller/insert',
 	                'classLoad': '.k-report-classLoad', //空的情况则默认去搜索
-	                'random': 0
+	                'random': 100
 	                /*'sourceType': [
 	                    'img',
 	                    'background-image'
@@ -565,14 +567,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //需要判断是否为element 待加
 
 	        var windowHeight = document.documentElement.clientHeight,
-	            elemTop = _Utils2['default'].offset(element).top;
+	            windowWidth = document.documentElement.clientWidth,
+	            elementOffset = _Utils2['default'].offset(element),
+	            isHidden = window.getComputedStyle(element, null).display === 'hidden',
+	            isTransparency = window.getComputedStyle(element, null).opacity == '0';
 
 	        //Utils.log('offset情况'+JSON.stringify(Utils.offset(element)))
-	        _Utils2['default'].log('elemTop: ' + elemTop + ' windowHeight: ' + windowHeight);
-	        _Utils2['default'].log('资源是否在首屏' + (elemTop <= windowHeight));
-	        if (elemTop <= windowHeight) {
+	        _Utils2['default'].log('element: ');
+	        _Utils2['default'].log(element);
+	        _Utils2['default'].log(window.getComputedStyle(element, null));
+	        _Utils2['default'].log('elemTop: ' + elementOffset.top + ' windowHeight: ' + windowHeight);
+	        _Utils2['default'].log('elemLeft: ' + elementOffset.left + ' windowWidth: ' + windowWidth);
+
+	        if (elementOffset.top >= 0 && elementOffset.top <= windowHeight && elementOffset.left >= 0 && elementOffset.left <= windowWidth && !isHidden && !isTransparency) {
+	            _Utils2['default'].log('资源是否在首屏: 是');
 	            return true;
 	        } else {
+	            _Utils2['default'].log('资源是否在首屏: 否');
 	            return false;
 	        }
 	    };

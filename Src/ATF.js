@@ -56,14 +56,29 @@ export default class ATF {
         //需要判断是否为element 待加
 
         let windowHeight = document.documentElement.clientHeight,
-            elemTop = Utils.offset(element).top
+            windowWidth = document.documentElement.clientWidth,
+            elementOffset = Utils.offset(element),
+            isHidden = window.getComputedStyle(element, null).display === 'hidden',
+            isTransparency = window.getComputedStyle(element, null).opacity == '0'
 
         //Utils.log('offset情况'+JSON.stringify(Utils.offset(element)))
-        Utils.log('elemTop: '+elemTop+ ' windowHeight: '+ windowHeight)
-        Utils.log('资源是否在首屏' + (elemTop <= windowHeight))
-        if (elemTop <= windowHeight) {
+        Utils.log('element: ')
+        Utils.log(element)
+        Utils.log(window.getComputedStyle(element, null))
+        Utils.log('elemTop: '+elementOffset.top+ ' windowHeight: '+ windowHeight)
+        Utils.log('elemLeft: '+elementOffset.left+ ' windowWidth: '+ windowWidth)
+        
+        if ( elementOffset.top >=0 
+                && elementOffset.top <= windowHeight
+                && elementOffset.left >= 0 
+                && elementOffset.left <= windowWidth
+                && !isHidden
+                && !isTransparency
+                ) {
+            Utils.log('资源是否在首屏: 是' )
             return true
         }else {
+            Utils.log('资源是否在首屏: 否' )
             return false
         }
         
